@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Standard · Tổng quan dự án</title>
+<meta name="description" content="Tổng quan và cơ chế hoạt động của dự án.">
+<meta property="og:title" content="The Standard · Tổng quan dự án">
+<meta property="og:description" content="Tổng quan và cơ chế hoạt động của dự án.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0A;
+  --bg-2:#111111;
+  --bg-3:#161616;
+  --line:rgba(255,255,255,0.10);
+  --line-2:rgba(255,255,255,0.18);
+  --text:#EDEAE2;
+  --text-mute:rgba(237,234,226,0.55);
+  --text-dim:rgba(237,234,226,0.40);
+  --accent:#D4B86A;
+  --accent-2:#B89752;
+  --cream:#F2EDE0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  letter-spacing:-0.005em;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:
+    radial-gradient(ellipse 800px 600px at 80% -10%, rgba(212,184,106,0.08), transparent 70%),
+    radial-gradient(ellipse 600px 800px at 10% 50%, rgba(212,184,106,0.04), transparent 70%);
+}
+.serif{font-family:'Instrument Serif',serif;font-weight:400}
+.acc{color:var(--accent)}
+.italic{font-style:italic}
+
+.wrap{max-width:1280px;margin:0 auto;padding:0 40px;position:relative;z-index:2}
+
+/* ---------- top marquee bar ---------- */
+.top{
+  position:sticky;top:0;z-index:50;
+  background:rgba(10,10,10,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+  padding:18px 0;
+}
+.top-row{display:flex;justify-content:space-between;align-items:center;gap:24px;font-size:12px;letter-spacing:0.02em}
+.brand-mark{font-family:'Instrument Serif',serif;font-size:1.4rem;font-weight:400;letter-spacing:-0.01em}
+.brand-mark sup{font-size:.55em;vertical-align:super;color:var(--text-mute)}
+.top-nav{display:flex;gap:28px;color:var(--text-mute);flex-wrap:wrap}
+.top-nav span{display:flex;gap:8px;align-items:center}
+.top-nav .sl{color:var(--accent);opacity:.6}
+.top-status{display:flex;gap:14px;align-items:center;color:var(--text-mute)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* ---------- HERO ---------- */
+.hero{padding:140px 0 100px;position:relative}
+.hero-meta{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-mute);
+  margin-bottom:60px;
+}
+.hero-meta .l{display:flex;flex-direction:column;gap:6px}
+.hero-meta .r{text-align:right}
+.hero h1{
+  font-family:'Instrument Serif',serif;
+  font-weight:400;
+  font-size:clamp(4rem,12vw,11rem);
+  line-height:0.92;
+  letter-spacing:-0.03em;
+  margin-bottom:50px;
+}
+.hero h1 .it{font-style:italic;color:var(--accent)}
+.hero h1 sup{font-size:.3em;vertical-align:super;color:var(--text-mute);font-style:normal;letter-spacing:0}
+.hero-tagline{
+  display:grid;grid-template-columns:1fr 1.5fr;gap:80px;
+  padding-top:40px;border-top:1px solid var(--line);
+  align-items:start;
+}
+.hero-tagline .lbl{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-mute)}
+.hero-tagline .copy{
+  font-family:'Instrument Serif',serif;font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:400;
+  line-height:1.25;letter-spacing:-0.015em;color:var(--text);
+}
+.hero-tagline .copy em{font-style:italic;color:var(--accent)}
+
+/* ---------- section frame ---------- */
+section{padding:120px 0;position:relative;border-top:1px solid var(--line)}
+.sec-tag{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-bottom:80px;
+}
+.sec-tag .l{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-mute);display:flex;flex-direction:column;gap:8px}
+.sec-tag .r{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-mute)}
+.sec-title{
+  font-family:'Instrument Serif',serif;font-weight:400;
+  font-size:clamp(2.6rem,6vw,5rem);
+  line-height:0.98;letter-spacing:-0.025em;
+  margin-top:18px;
+}
+.sec-title em{font-style:italic;color:var(--accent)}
+.sec-cnt{margin-top:14px;color:var(--text-mute);font-family:'Instrument Serif',serif;font-size:1.2rem;font-style:italic}
+
+/* ---------- 1. PROBLEM ---------- */
+.problem-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);
+}
+.prob{background:var(--bg);padding:56px 40px;transition:background .5s ease;position:relative}
+.prob:hover{background:var(--bg-2)}
+.prob .num{
+  font-family:'Instrument Serif',serif;font-size:5rem;font-weight:400;
+  color:var(--accent);line-height:0.9;letter-spacing:-0.04em;
+}
+.prob .ln{width:40px;height:1px;background:var(--line-2);margin:28px 0}
+.prob h3{
+  font-family:'Instrument Serif',serif;font-size:1.9rem;font-weight:400;
+  line-height:1.15;letter-spacing:-0.015em;margin-bottom:18px;
+}
+.prob p{color:var(--text-mute);font-size:.96rem;line-height:1.6}
+
+/* ---------- 2. KPI ---------- */
+.kpi-wrap{position:relative}
+.kpi-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);
+}
+.kpi-grid.kpi-3{grid-template-columns:repeat(3,1fr)}
+.kpi{background:var(--bg);padding:54px 32px;text-align:left;position:relative}
+.kpi.acc-cell{background:linear-gradient(180deg,rgba(212,184,106,0.10) 0%,var(--bg) 100%)}
+.kpi .lbl-top{font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--text-mute);margin-bottom:20px}
+.kpi .v{
+  font-family:'Instrument Serif',serif;font-size:clamp(3rem,5.5vw,4.8rem);
+  font-weight:400;line-height:0.9;letter-spacing:-0.04em;color:var(--text);
+}
+.kpi.acc-cell .v{color:var(--accent)}
+.kpi .lbl-bot{font-size:.92rem;color:var(--text-mute);margin-top:18px;line-height:1.4}
+
+.kpi-quote{
+  margin-top:60px;padding:40px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;
+  font-size:clamp(1.6rem,3.4vw,2.6rem);line-height:1.25;letter-spacing:-0.015em;
+  color:var(--accent);text-align:center;
+}
+
+/* ---------- 3. FUNNEL ---------- */
+.funnel{display:flex;flex-direction:column;border:1px solid var(--line)}
+.fn{
+  display:grid;grid-template-columns:80px 1fr 200px 100px;
+  align-items:center;gap:32px;padding:34px 40px;
+  border-bottom:1px solid var(--line);
+  transition:background .4s ease;
+  position:relative;
+}
+.fn:last-child{border-bottom:none}
+.fn:hover{background:var(--bg-2)}
+.fn .nm{font-family:'Instrument Serif',serif;font-size:2rem;color:var(--accent);font-weight:400;line-height:1}
+.fn .lb{font-size:1.05rem;color:var(--text);font-weight:400}
+.fn .lb .ds{display:block;font-size:.82rem;color:var(--text-dim);margin-top:4px}
+.fn .vl{
+  font-family:'Instrument Serif',serif;font-size:2.6rem;font-weight:400;
+  text-align:right;letter-spacing:-0.02em;line-height:1;
+}
+.fn .cr{font-size:.85rem;color:var(--text-mute);text-align:right;letter-spacing:0.04em}
+.fn.last{background:linear-gradient(90deg,rgba(212,184,106,0.10),transparent)}
+.fn.last .vl{color:var(--accent)}
+
+/* ---------- 4. SYSTEM ---------- */
+.sys-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.sys{background:var(--bg);padding:50px 40px;transition:background .5s ease;display:flex;flex-direction:column}
+.sys:hover{background:var(--bg-2)}
+.sys .hd{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-mute);
+  margin-bottom:30px;
+}
+.sys .pillar{color:var(--accent)}
+.sys h3{
+  font-family:'Instrument Serif',serif;font-size:2.4rem;font-weight:400;
+  line-height:1.08;letter-spacing:-0.02em;margin-bottom:22px;
+}
+.sys h3 em{font-style:italic;color:var(--accent)}
+.sys .body{color:var(--text-mute);font-size:.98rem;line-height:1.65;flex:1}
+.sys .pts{margin-top:32px;padding-top:24px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.sys .pt{font-size:.86rem;color:var(--text);display:flex;gap:10px}
+.sys .pt::before{content:"/";color:var(--accent);font-style:italic;font-family:'Instrument Serif',serif}
+
+/* ---------- 5. FLOW ---------- */
+.flow-wrap{position:relative}
+.flow-strip{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--line)}
+.fl{
+  padding:32px 16px;text-align:center;
+  border-right:1px solid var(--line);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  min-height:160px;transition:background .4s ease;
+}
+.fl:last-child{border-right:none}
+.fl:hover{background:var(--bg-2)}
+.fl .i{
+  font-family:'Instrument Serif',serif;font-size:2.2rem;color:var(--accent);
+  font-weight:400;line-height:1;letter-spacing:-0.02em;margin-bottom:16px;
+}
+.fl .n{font-size:.92rem;color:var(--text);line-height:1.3;margin-bottom:6px;font-weight:400}
+.fl .s{font-size:.74rem;color:var(--text-dim);letter-spacing:0.04em}
+.fl.featured{background:linear-gradient(180deg,rgba(212,184,106,0.10),transparent)}
+
+.loop-note{
+  margin-top:40px;text-align:center;
+  font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent);
+  font-size:clamp(1.2rem,2vw,1.6rem);letter-spacing:-0.005em;
+}
+
+/* ---------- 6. TIMELINE ---------- */
+.tl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.tl{background:var(--bg);padding:52px 40px;position:relative;transition:background .5s ease}
+.tl:hover{background:var(--bg-2)}
+.tl .hd{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-mute);margin-bottom:20px}
+.tl .m{
+  font-family:'Instrument Serif',serif;font-size:6rem;font-weight:400;
+  color:var(--accent);line-height:0.85;letter-spacing:-0.04em;
+}
+.tl h4{
+  font-family:'Instrument Serif',serif;font-size:1.6rem;font-weight:400;
+  margin:28px 0 22px;letter-spacing:-0.01em;
+}
+.tl ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.tl li{font-size:.92rem;color:var(--text-mute);display:flex;gap:12px;line-height:1.5}
+.tl li::before{content:"·";color:var(--accent);flex-shrink:0;font-weight:600}
+
+/* ---------- 7. ASSETS ---------- */
+.assets-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.asset{
+  background:var(--bg);padding:54px 32px;text-align:left;
+  transition:background .5s ease;display:flex;flex-direction:column;justify-content:space-between;min-height:240px;
+}
+.asset:hover{background:var(--bg-2)}
+.asset .v{
+  font-family:'Instrument Serif',serif;font-size:clamp(3.5rem,5.5vw,5rem);
+  font-weight:400;color:var(--accent);line-height:0.9;letter-spacing:-0.04em;
+}
+.asset .l{font-size:1.05rem;color:var(--text);font-weight:400;margin-top:auto;padding-top:24px;border-top:1px solid var(--line)}
+.asset .h{font-size:.82rem;color:var(--text-dim);font-style:italic;font-family:'Instrument Serif',serif;margin-top:6px}
+
+/* ---------- 8. CTA ---------- */
+.cta-wrap{
+  padding:140px 0 80px;border-top:1px solid var(--accent);
+  position:relative;
+}
+.cta-wrap::before{
+  content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:200px;height:1px;background:var(--accent);box-shadow:0 0 40px var(--accent);
+}
+.cta-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+}
+.cta-grid .lbl{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-mute);margin-bottom:20px}
+.cta-grid h2{
+  font-family:'Instrument Serif',serif;font-weight:400;
+  font-size:clamp(2.4rem,5vw,4.2rem);line-height:0.98;letter-spacing:-0.025em;
+}
+.cta-grid h2 em{font-style:italic;color:var(--accent)}
+.cta-grid .desc{color:var(--text-mute);margin-top:30px;font-size:1.05rem;line-height:1.65;max-width:48ch}
+
+.cta-action{display:flex;flex-direction:column;gap:22px}
+.cta-btn{
+  display:inline-flex;align-items:center;justify-content:space-between;
+  background:var(--accent);color:var(--bg);
+  padding:26px 36px;text-decoration:none;
+  font-size:1rem;font-weight:600;letter-spacing:0.04em;
+  transition:all .3s ease;gap:24px;
+  border:1px solid var(--accent);
+}
+.cta-btn:hover{background:transparent;color:var(--accent);transform:translateX(8px)}
+.cta-btn .ar{font-family:'Instrument Serif',serif;font-size:1.6rem;font-weight:400;font-style:italic}
+.cta-sub{font-size:.88rem;color:var(--text-mute);letter-spacing:0.04em}
+.cta-sub a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)}
+
+/* ---------- footer ---------- */
+footer{padding:80px 0 60px;border-top:1px solid var(--line)}
+.foot{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end}
+.foot .b{
+  font-family:'Instrument Serif',serif;font-size:8rem;font-weight:400;
+  line-height:0.9;letter-spacing:-0.04em;
+}
+.foot .b sup{font-size:.25em;vertical-align:super;color:var(--text-mute)}
+.foot .r{text-align:right;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-mute);line-height:2}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ---------- responsive ---------- */
+@media(max-width:980px){
+  .wrap{padding:0 24px}
+  .problem-grid,.sys-grid{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .kpi-grid.kpi-3{grid-template-columns:1fr}
+  .assets-grid{grid-template-columns:1fr 1fr}
+  .flow-strip{grid-template-columns:1fr 1fr}
+  .fl{border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tl-grid{grid-template-columns:1fr}
+  .hero-tagline{grid-template-columns:1fr;gap:20px}
+  .cta-grid{grid-template-columns:1fr;gap:40px}
+  .foot{grid-template-columns:1fr;gap:30px}
+  .foot .b{font-size:5rem}
+  .foot .r{text-align:left}
+  .fn{grid-template-columns:60px 1fr 130px;gap:20px;padding:24px 28px}
+  .fn .cr{display:none}
+  .fn .vl{font-size:1.8rem}
+  section{padding:80px 0}
+  .top-nav{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP -->
+<div class="top">
+  <div class="wrap">
+    <div class="top-row">
+      <div class="brand-mark">GIVEHADA</div>
+      <div class="top-nav">
+        <span><span class="sl">/ 01 /</span> Vấn đề</span>
+        <span><span class="sl">/ 02 /</span> Tài chính</span>
+        <span><span class="sl">/ 03 /</span> Phễu</span>
+        <span><span class="sl">/ 04 /</span> Hệ thống</span>
+        <span><span class="sl">/ 05 /</span> Vận hành</span>
+        <span><span class="sl">/ 06 /</span> Đề xuất</span>
+      </div>
+      <div class="top-status">
+        <span class="dot"></span>
+        <span>Q3 · 2026</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-meta">
+      <div class="l">
+        <div>The Standard</div>
+        <div>A growth campaign by GIVEHADA</div>
+      </div>
+      <div class="r">
+        <div>Tháng 7 · 8 · 9</div>
+        <div>2026</div>
+      </div>
+    </div>
+
+    <h1>The<br><span class="it">Standard</span></h1>
+
+    <div class="hero-tagline">
+      <div class="lbl">/ Manifesto / 2026</div>
+      <div class="copy">
+        Chuẩn mực mới cho mạng lưới Master. <em>Một hệ thống khép kín</em>, biến tay nghề rời rạc thành đội ngũ dẫn đầu ngành.
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- 1. PROBLEM -->
+<section>
+  <div class="wrap">
+    <div class="sec-tag reveal">
+      <div class="l">
+        <div>Bắt đầu từ thực tế</div>
+        <h2 class="sec-title">Ba vấn đề <em>đợi lời giải</em></h2>
+      </div>
+      <div class="r">/ 01 / ©</div>
+    </div>
+    <div class="problem-grid reveal">
+      <div class="prob">
+        <div class="num">01</div>
+        <div class="ln"></div>
+        <h3>Master thiếu hoạt động</h3>
+        <p>Mạng lưới ít chuyển động, khó tăng trưởng và mở mới. Người mới không có dòng chảy để gia nhập, mạng lưới trầm xuống theo thời gian.</p>
+      </div>
+      <div class="prob">
+        <div class="num">02</div>
+        <div class="ln"></div>
+        <h3>Tinh thần không ổn định</h3>
+        <p>Master lên xuống theo cảm hứng, không có nhịp giữ chân. Người nhiệt huyết một thời gian rồi nguội, ảnh hưởng chất lượng vận hành chung.</p>
+      </div>
+      <div class="prob">
+        <div class="num">03</div>
+        <div class="ln"></div>
+        <h3>Không có tiêu chuẩn hình ảnh</h3>
+        <p>Mỗi Master một phong cách, hình ảnh phát ra không đồng đều. Thương hiệu chung bị loãng, khó tạo cảm giác dẫn đầu ngành.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. KPI FINANCE -->
+<section>
+  <div class="wrap">
+    <div class="sec-tag reveal">
+      <div class="l">
+        <div>Bức tranh tài chính</div>
+        <h2 class="sec-title">Bốn con số <em>quyết định</em></h2>
+        <p class="sec-cnt">Số liệu trên cơ sở 36 Master mới · 30 triệu/Master</p>
+      </div>
+      <div class="r">/ 02 / ©</div>
+    </div>
+    <div class="kpi-grid kpi-3 reveal">
+      <div class="kpi">
+        <div class="lbl-top">/ Ngân sách</div>
+        <div class="v" data-target="433" data-suffix="M">433M</div>
+        <div class="lbl-bot">Ngân sách cần duyệt cho cả chiến dịch Q3.</div>
+      </div>
+      <div class="kpi acc-cell">
+        <div class="lbl-top">/ Doanh thu dự kiến</div>
+        <div class="v" data-target="1080" data-suffix="M">1080M</div>
+        <div class="lbl-bot">Chưa bao gồm chi phí hàng hóa. Trên cơ sở 36 Master × 30 triệu.</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl-top">/ Hoàn vốn</div>
+        <div class="v" data-target="149" data-suffix="%">149%</div>
+        <div class="lbl-bot">ROI dự kiến trước chi phí hàng hóa.</div>
+      </div>
+    </div>
+    <div class="kpi-quote reveal">"Đầu tư 433 triệu, mạng lưới sống lại, thương hiệu dẫn đầu. <em>Một quyết định, ba kết quả</em>."</div>
+  </div>
+</section>
+
+<!-- 3. PHỄU -->
+<section>
+  <div class="wrap">
+    <div class="sec-tag reveal">
+      <div class="l">
+        <div>Vì sao tin vào con số 36</div>
+        <h2 class="sec-title">Phễu sáu tầng, <em>đo được</em></h2>
+        <p class="sec-cnt">Không làm rồi mới đếm. Biết trước cần chạm bao nhiêu người để ra một Master.</p>
+      </div>
+      <div class="r">/ 03 / ©</div>
+    </div>
+    <div class="funnel reveal">
+      <div class="fn"><div class="nm">01</div><div class="lb">Reach bestcut <span class="ds">TikTok · Reels · Zalo · YouTube</span></div><div class="vl">500.000</div><div class="cr">.</div></div>
+      <div class="fn"><div class="nm">02</div><div class="lb">Đăng ký form <span class="ds">Gắn UTM, đo nguồn</span></div><div class="vl">2.000</div><div class="cr">0,4%</div></div>
+      <div class="fn"><div class="nm">03</div><div class="lb">Dự workshop <span class="ds">Phòng họp online</span></div><div class="vl">800</div><div class="cr">40%</div></div>
+      <div class="fn"><div class="nm">04</div><div class="lb">Vào cộng đồng <span class="ds">FB Group · Zalo Group</span></div><div class="vl">600</div><div class="cr">75%</div></div>
+      <div class="fn"><div class="nm">05</div><div class="lb">Dự offline <span class="ds">Sự kiện cuối đợt</span></div><div class="vl">180</div><div class="cr">30%</div></div>
+      <div class="fn last"><div class="nm">06</div><div class="lb">Master mới active <span class="ds">Ký kết, onboarding</span></div><div class="vl">36</div><div class="cr">20%</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. HỆ THỐNG -->
+<section>
+  <div class="wrap">
+    <div class="sec-tag reveal">
+      <div class="l">
+        <div>Hệ thống ba trụ</div>
+        <h2 class="sec-title">Ba trụ, <em>một đích</em></h2>
+        <p class="sec-cnt">Active Master mới, giữ Master không tụt chuẩn, đồng nhất hình ảnh truyền thông.</p>
+      </div>
+      <div class="r">/ 04 / ©</div>
+    </div>
+    <div class="sys-grid reveal">
+      <div class="sys">
+        <div class="hd"><span>Trụ <span class="pillar">01</span></span><span>Active</span></div>
+        <h3>Mục tiêu <em>active</em></h3>
+        <div class="body">Kéo người lạ qua phễu sáu tầng tới ký kết Master. 36 Master mới, đưa mạng lưới tiến gần mốc 140.</div>
+        <div class="pts">
+          <div class="pt">10 workshop, 2 sự kiện offline</div>
+          <div class="pt">Đo lường qua UTM và CRM</div>
+        </div>
+      </div>
+      <div class="sys">
+        <div class="hd"><span>Trụ <span class="pillar">02</span></span><span>Chuẩn</span></div>
+        <h3>Tiêu chuẩn <em>Master</em></h3>
+        <div class="body">Quy chuẩn hai tầng giữ Master không tụt. Lộ trình bốn nấc đưa Master giỏi nhất lên đứng lớp.</div>
+        <div class="pts">
+          <div class="pt">Chuẩn sàn bắt buộc, chuẩn cao tôn vinh</div>
+          <div class="pt">Master quay lại tạo Master mới</div>
+        </div>
+      </div>
+      <div class="sys">
+        <div class="hd"><span>Trụ <span class="pillar">03</span></span><span>Hình ảnh</span></div>
+        <h3>Tiêu chí <em>hình ảnh</em></h3>
+        <div class="body">Concept xuyên suốt, khung quay cố định, lịch phân phối đa kênh. Một buổi quay, nhiều định dạng.</div>
+        <div class="pts">
+          <div class="pt">Tông navy · gold · cream</div>
+          <div class="pt">YouTube · TikTok · Zalo · FB</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. FLOW -->
+<section>
+  <div class="wrap">
+    <div class="sec-tag reveal">
+      <div class="l">
+        <div>Toàn cảnh vận hành</div>
+        <h2 class="sec-title">Một vòng <em>khép kín</em></h2>
+        <p class="sec-cnt">Tiền đầu tư quý 3 sinh lời nhiều quý sau. Master do mình đào tạo quay lại tạo Master mới.</p>
+      </div>
+      <div class="r">/ 05 / ©</div>
+    </div>
+    <div class="flow-strip reveal">
+      <div class="fl"><div class="i">01</div><div class="n">Bestcut</div><div class="s">Chạm người lạ</div></div>
+      <div class="fl"><div class="i">02</div><div class="n">Form đăng ký</div><div class="s">UTM · Đo nguồn</div></div>
+      <div class="fl"><div class="i">03</div><div class="n">Workshop online</div><div class="s">Thu hút, nuôi</div></div>
+      <div class="fl"><div class="i">04</div><div class="n">Cộng đồng</div><div class="s">FB · Zalo Group</div></div>
+      <div class="fl"><div class="i">05</div><div class="n">Offline</div><div class="s">30 – 60 người</div></div>
+      <div class="fl featured"><div class="i">06</div><div class="n">Master mới</div><div class="s">Ký kết</div></div>
+      <div class="fl featured"><div class="i">07</div><div class="n">Đứng lớp</div><div class="s">Tạo Master mới</div></div>
+    </div>
+    <div class="loop-note reveal">"Master giữ chuẩn quay lại đứng lớp, mở đầu lại từ bước một."</div>
+  </div>
+</section>
+
+<!-- 6. TIMELINE -->
+<section>
+  <div class="wrap">
+    <div class="sec-tag reveal">
+      <div class="l">
+        <div>Lịch triển khai</div>
+        <h2 class="sec-title">Ba tháng, <em>hai đợt</em></h2>
+        <p class="sec-cnt">Hai đợt độc lập, mỗi đợt khép lại bằng một offline để chốt Master.</p>
+      </div>
+      <div class="r">/ 06 / ©</div>
+    </div>
+    <div class="tl-grid reveal">
+      <div class="tl">
+        <div class="hd">/ Đợt 01 · Thu hút</div>
+        <div class="m">07</div>
+        <h4>Tháng bảy</h4>
+        <ul>
+          <li>2 workshop online thu hút</li>
+          <li>Lấy đăng ký, đưa vào cộng đồng</li>
+          <li>Khởi động truyền thông bestcut</li>
+        </ul>
+      </div>
+      <div class="tl">
+        <div class="hd">/ Đợt 01 · Nuôi &amp; chốt</div>
+        <div class="m">08</div>
+        <h4>Tháng tám</h4>
+        <ul>
+          <li>3 workshop online nuôi</li>
+          <li>1 sự kiện offline kích hoạt</li>
+          <li>Master đợt 1 onboarding</li>
+        </ul>
+      </div>
+      <div class="tl">
+        <div class="hd">/ Đợt 02 · Mở rộng</div>
+        <div class="m">09</div>
+        <h4>Tháng chín</h4>
+        <ul>
+          <li>4 workshop online đợt 2</li>
+          <li>1 sự kiện offline cuối</li>
+          <li>Tổng kết, đo lường 36 Master</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. ASSETS -->
+<section>
+  <div class="wrap">
+    <div class="sec-tag reveal">
+      <div class="l">
+        <div>Ngoài tiền, còn lại gì</div>
+        <h2 class="sec-title">Bốn tài sản <em>dài hạn</em></h2>
+        <p class="sec-cnt">Sau khi P&amp;L đóng quý, bốn thứ này tiếp tục sinh lợi cho các quý sau.</p>
+      </div>
+      <div class="r">/ 07 / ©</div>
+    </div>
+    <div class="assets-grid reveal">
+      <div class="asset">
+        <div class="v">50</div>
+        <div>
+          <div class="l">Bestcut</div>
+          <div class="h">dùng lại nhiều quý</div>
+        </div>
+      </div>
+      <div class="asset">
+        <div class="v">10</div>
+        <div>
+          <div class="l">Podcast</div>
+          <div class="h">kho nội dung trụ</div>
+        </div>
+      </div>
+      <div class="asset">
+        <div class="v">01</div>
+        <div>
+          <div class="l">Quy trình</div>
+          <div class="h">lặp lại được</div>
+        </div>
+      </div>
+      <div class="asset">
+        <div class="v">36<span style="font-size:.5em;color:var(--text-mute)">+</span></div>
+        <div>
+          <div class="l">Master chuẩn</div>
+          <div class="h">dẫn đầu ngành</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. CTA -->
+<div class="cta-wrap">
+  <div class="wrap">
+    <div class="cta-grid reveal">
+      <div>
+        <div class="lbl">/ Đề xuất / Q3 2026</div>
+        <h2>Duyệt ngân sách <em>433 triệu</em>, triển khai từ tháng 7.</h2>
+        <p class="desc">Toàn bộ chi tiết kế hoạch, phễu, quy chuẩn Master và P&amp;L được trình bày trong file Google Sheets đính kèm. Trang này là bản tóm tắt một mạch dọc cho quyết định.</p>
+      </div>
+      <div class="cta-action">
+        <a href="https://docs.google.com/spreadsheets/d/1phJYZEBoWAkYpICDPfd3ppX-cWNGNfbX/edit?usp=sharing&ouid=115489295239113135512&rtpof=true&sd=true" target="_blank" rel="noopener" class="cta-btn">
+          <span>Xem chi tiết tại đây</span>
+          <span class="ar">→</span>
+        </a>
+        <div class="cta-sub">Kết quả đo lường công bố trong tháng 9 · 2026</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="b">GIVEHADA</div>
+      <div class="r">
+        <div>The Standard / Q3 / 2026</div>
+        <div>Available for review</div>
+        <div>© H2Y International JSC</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      if(e.target.classList.contains('kpi-grid')){
+        e.target.querySelectorAll('.v').forEach(el=>{
+          const target=parseInt(el.dataset.target);
+          const suffix=el.dataset.suffix||'';
+          const dur=1400;const start=performance.now();
+          function tick(now){
+            const p=Math.min((now-start)/dur,1);
+            const eased=1-Math.pow(1-p,3);
+            const cur=Math.floor(target*eased);
+            el.textContent=cur+suffix;
+            if(p<1) requestAnimationFrame(tick);
+            else el.textContent=target+suffix;
+          }
+          requestAnimationFrame(tick);
+        });
+      }
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
